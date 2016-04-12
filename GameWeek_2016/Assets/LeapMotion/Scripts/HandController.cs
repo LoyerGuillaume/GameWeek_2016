@@ -165,76 +165,100 @@ public class HandController : MonoBehaviour {
     else
       hand_model.SetLeapHand(null);
   }
+    
 
-  /** 
-  * Updates hands based on tracking data in the specified Leap HandList object.
-  * Active HandModel instances are updated if the hand they represent is still
-  * present in the Leap HandList; otherwise, the HandModel is removed. If new
-  * Leap Hand objects are present in the Leap HandList, new HandModels are 
-  * created and added to the HandController hand list. 
-  * @param all_hands The dictionary containing the HandModels to update.
-  * @param leap_hands The list of hands from the a Leap Frame instance.
-  * @param left_model The HandModel instance to use for new left hands.
-  * @param right_model The HandModel instance to use for new right hands.
-  */
-	protected void UpdateHandModels(Dictionary<int, HandModel> all_hands,
-                                  HandList leap_hands,
-                                  HandModel left_model, HandModel right_model) {
+    /** 
+    * Updates hands based on tracking data in the specified Leap HandList object.
+    * Active HandModel instances are updated if the hand they represent is still
+    * present in the Leap HandList; otherwise, the HandModel is removed. If new
+    * Leap Hand objects are present in the Leap HandList, new HandModels are 
+    * created and added to the HandController hand list. 
+    * @param all_hands The dictionary containing the HandModels to update.
+    * @param leap_hands The list of hands from the a Leap Frame instance.
+    * @param left_model The HandModel instance to use for new left hands.
+    * @param right_model The HandModel instance to use for new right hands.
+    */
+protected void UpdateHandModels(Dictionary<int, HandModel> all_hands,
+                                HandList leap_hands,
+                                HandModel left_model, HandModel right_model) {
     List<int> ids_to_check = new List<int>(all_hands.Keys);
 
     // Go through all the active hands and update them.
     int num_hands = leap_hands.Count;
     for (int h = 0; h < num_hands; ++h) {
-      Hand leap_hand = leap_hands[h];
+        Hand leap_hand = leap_hands[h];
       
-      HandModel model = (mirrorZAxis != leap_hand.IsLeft) ? left_model : right_model;
+        HandModel model = (mirrorZAxis != leap_hand.IsLeft) ? left_model : right_model;
 
-      // If we've mirrored since this hand was updated, destroy it.
-      if (all_hands.ContainsKey(leap_hand.Id) &&
-          all_hands[leap_hand.Id].IsMirrored() != mirrorZAxis) {
-        DestroyHand(all_hands[leap_hand.Id]);
-        all_hands.Remove(leap_hand.Id);
-      }
-
-      // Only create or update if the hand is enabled.
-      if (model != null) {
-        ids_to_check.Remove(leap_hand.Id);
-
-        // Create the hand and initialized it if it doesn't exist yet.
-        if (!all_hands.ContainsKey(leap_hand.Id)) {
-          HandModel new_hand = CreateHand(model);
-          new_hand.SetLeapHand(leap_hand);
-          new_hand.MirrorZAxis(mirrorZAxis);
-          new_hand.SetController(this);
-
-          // Set scaling based on reference hand.
-          float hand_scale = MM_TO_M * leap_hand.PalmWidth / new_hand.handModelPalmWidth;
-          new_hand.transform.localScale = hand_scale * transform.lossyScale;
-
-          new_hand.InitHand();
-          new_hand.UpdateHand();
-          all_hands[leap_hand.Id] = new_hand;
+        // If we've mirrored since this hand was updated, destroy it.
+        if (all_hands.ContainsKey(leap_hand.Id) &&
+            all_hands[leap_hand.Id].IsMirrored() != mirrorZAxis) {
+            DestroyHand(all_hands[leap_hand.Id]);
+            all_hands.Remove(leap_hand.Id);
         }
-        else {
-          // Make sure we update the Leap Hand reference.
-          HandModel hand_model = all_hands[leap_hand.Id];
-          hand_model.SetLeapHand(leap_hand);
-          hand_model.MirrorZAxis(mirrorZAxis);
 
-          // Set scaling based on reference hand.
-          float hand_scale = MM_TO_M * leap_hand.PalmWidth / hand_model.handModelPalmWidth;
-          hand_model.transform.localScale = hand_scale * transform.lossyScale;
-          hand_model.UpdateHand();
+        // Only create or update if the hand is enabled.
+        if (model != null) {
+            ids_to_check.Remove(leap_hand.Id);
+
+            // Create the hand and initialized it if it doesn't exist yet.
+            if (!all_hands.ContainsKey(leap_hand.Id)) {
+                    int countLeftHandInStage = 0;
+                    int countRightHandInStage = 0;
+
+                    for (int idHand = 0; idHand < num_hands; ++idHand)
+                    {
+                        if (leap_hands[idHand].IsLeft)
+                        {
+                            countLeftHandInStage++;
+                        }
+                        else if (leap_hands[idHand].IsRight)
+                        {
+                            countRightHandInStage++;
+                        }
+                    }
+
+                    if (leap_hand.IsLeft && countLeftHandInStage > 1)
+                    {
+                        break;
+                    } else if (leap_hand.IsRight && countRightHandInStage > 1)
+                    {
+                        break;
+                    }
+                    
+                HandModel new_hand = CreateHand(model);
+                new_hand.SetLeapHand(leap_hand);
+                new_hand.MirrorZAxis(mirrorZAxis);
+                new_hand.SetController(this);
+
+                // Set scaling based on reference hand.
+                float hand_scale = MM_TO_M * leap_hand.PalmWidth / new_hand.handModelPalmWidth;
+                new_hand.transform.localScale = hand_scale * transform.lossyScale;
+
+                new_hand.InitHand();
+                new_hand.UpdateHand();
+                all_hands[leap_hand.Id] = new_hand;
+            }
+            else {
+                // Make sure we update the Leap Hand reference.
+                HandModel hand_model = all_hands[leap_hand.Id];
+                hand_model.SetLeapHand(leap_hand);
+                hand_model.MirrorZAxis(mirrorZAxis);
+
+                // Set scaling based on reference hand.
+                float hand_scale = MM_TO_M * leap_hand.PalmWidth / hand_model.handModelPalmWidth;
+                hand_model.transform.localScale = hand_scale * transform.lossyScale;
+                hand_model.UpdateHand();
+            }
         }
-      }
     }
 
     // Destroy all hands with defunct IDs.
     for (int i = 0; i < ids_to_check.Count; ++i) {
-      DestroyHand(all_hands[ids_to_check[i]]);
-      all_hands.Remove(ids_to_check[i]);
+        DestroyHand(all_hands[ids_to_check[i]]);
+        all_hands.Remove(ids_to_check[i]);
     }
-  }
+}
 
   /** Creates a ToolModel instance. */
   protected ToolModel CreateTool(ToolModel model) {
