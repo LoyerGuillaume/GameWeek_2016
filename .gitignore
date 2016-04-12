@@ -48,3 +48,6 @@ Temporary Items
 
 # Guillaume - Temps files
 GameWeek_2016/Temp/*
+
+GameWeek_2016/Library/*/*
+GameWeek_2016/Library/UnityAssemblies/UnityEngine.dll
