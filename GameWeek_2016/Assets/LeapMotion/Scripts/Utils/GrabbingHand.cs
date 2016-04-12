@@ -11,11 +11,14 @@ using Leap;
 // Leap Motion hand script that detects pinches and grabs the closest rigidbody.
 public class GrabbingHand : MonoBehaviour {
 
-  public enum PinchState {
-    kPinched,
-    kReleased,
-    kReleasing
-  }
+    //Custom - Vitesse du shoot
+    public float speedShoot = 2;
+
+    public enum PinchState {
+        kPinched,
+        kReleased,
+        kReleasing
+    }
 
   // Layers that we can grab.
   public LayerMask grabbableLayers = ~0;
@@ -180,22 +183,38 @@ public class GrabbingHand : MonoBehaviour {
     }
   }
 
-  protected void OnRelease() {
+    protected void OnRelease() {
     if (active_object_ != null) {
-      // Notify the grabbable object that is was released.
-      GrabbableObject grabbable = active_object_.GetComponent<GrabbableObject>();
-      if (grabbable != null)
-        grabbable.OnRelease();
+        // Notify the grabbable object that is was released.
+        GrabbableObject grabbable = active_object_.GetComponent<GrabbableObject>();
+        if (grabbable != null)
+            grabbable.OnRelease();
 
-      if (grabbable == null || grabbable.rotateQuickly)
-        active_object_.GetComponent<Rigidbody>().maxAngularVelocity = last_max_angular_velocity_;
+        if (grabbable == null || grabbable.rotateQuickly)
+            active_object_.GetComponent<Rigidbody>().maxAngularVelocity = last_max_angular_velocity_;
 
-      Leap.Utils.IgnoreCollisions(gameObject, active_object_.gameObject, false);
+        ShootActiveObject();
+        Leap.Utils.IgnoreCollisions(gameObject, active_object_.gameObject, false);
     }
     active_object_ = null;
 
     Hover();
-  }
+    }
+
+
+    /// <summary>
+    /// Fonction Custom
+    /// Fonction qui permet de shooter l'active object
+    /// </summary>
+    protected void ShootActiveObject()
+    {
+        
+        Vector3 positionCamera = Camera.main.transform.position;
+
+        Vector3 directionShoot = active_object_.transform.position - positionCamera;
+        active_object_.GetComponent<Rigidbody>().velocity = directionShoot * speedShoot;
+
+    }
 
   protected PinchState GetNewPinchState() {
     HandModel hand_model = GetComponent<HandModel>();
