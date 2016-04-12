@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Altar : MonoBehaviour {
 
+    public float lifeTime = 5000;
+    
 	// Use this for initialization
 	void Start () {
 	
@@ -33,5 +35,17 @@ public class Altar : MonoBehaviour {
             obj.transform.position = Vector3.Lerp(initPosition, transform.position, percent);
             yield return null;
         }
+    }
+
+    IEnumerator Depreciated ()
+    {
+        float timer = 0;
+
+        while (timer < lifeTime)
+        {
+
+            yield return null;
+        }
+        
     }
 }
