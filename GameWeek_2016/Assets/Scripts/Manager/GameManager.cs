@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour {
 
     IEnumerator Start()
     {
-        while (!(MenuManager.manager.IsReady) || !(LevelManager.manager.IsReady) || !(CustomTimer.manager.IsReady)) {
+        while (!(MenuManager.manager.IsReady) || !(LevelManager.manager.IsReady)) {
             yield return null;
         }
         
@@ -27,7 +27,6 @@ public class GameManager : MonoBehaviour {
     {
         print("GameManager - StartLevel");
         LevelManager.manager.StartLevel();
-        CustomTimer.manager.StartTimer();
     }
 
     // Update is called once per frame

@@ -65,6 +65,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Altar.cs" />
     <Compile Include="Assets\LeapMotion\DemoResources\Scripts\AerodynamicLeaf.cs" />
     <Compile Include="Assets\LeapMotion\DemoResources\Scripts\ChangeMaterialOnGrab.cs" />
     <Compile Include="Assets\LeapMotion\DemoResources\Scripts\CubeWave.cs" />
@@ -136,13 +137,14 @@
     <Compile Include="Assets\LeapMotion\Widgets\Scripts\SliderActivationManager.cs" />
     <Compile Include="Assets\LeapMotion\Widgets\Scripts\Utils\ExponentialSmoothing.cs" />
     <Compile Include="Assets\LeapMotion\Widgets\Scripts\Utils\FrameRateControls.cs" />
-    <Compile Include="Assets\Scripts\Altar.cs" />
     <Compile Include="Assets\Scripts\Manager\BaseManager.cs" />
-    <Compile Include="Assets\Scripts\Manager\CustomTimer.cs" />
     <Compile Include="Assets\Scripts\Manager\GameManager.cs" />
     <Compile Include="Assets\Scripts\Manager\HudManager.cs" />
     <Compile Include="Assets\Scripts\Manager\LevelManager.cs" />
     <Compile Include="Assets\Scripts\Manager\MenuManager.cs" />
+    <Compile Include="Assets\Scripts\Particle\GeneratorManager.cs" />
+    <Compile Include="Assets\Scripts\Particle\Particle.cs" />
+    <Compile Include="Assets\Scripts\Particle\ParticleGenerator.cs" />
     <Compile Include="Assets\Scripts\Tests\ChangeMainColorMaterial.cs" />
   </ItemGroup>
   <ItemGroup>
