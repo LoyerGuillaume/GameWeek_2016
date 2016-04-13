@@ -11,6 +11,9 @@ public class Particle : MonoBehaviour {
 	private Vector3 currentPosition; 
 	public float elevation = 5;
 
+    private float rotationY = 1.5f;
+    private float rotationZ = 0.1f;
+
     Coroutine moveUpCoroutine; 
 
 	// Use this for initialization
@@ -24,7 +27,7 @@ public class Particle : MonoBehaviour {
 	void Update ()
 	{
 		// on donne un axe de rotation pour l'objet 
-		transform.Rotate(0, 1.5f, 0.1f, Space.World); 
+		transform.Rotate(0, rotationY, rotationZ, Space.World); 
 	}
 
 	IEnumerator MoveUp()
@@ -44,10 +47,10 @@ public class Particle : MonoBehaviour {
 			transform.position = Vector3.Lerp (initialPosition, targetPosition, movement.Evaluate(percent)); 
 
 			//taille initiale 
-			transform.localScale = new Vector3 (0.025f, 0.025f, 0.025f); 
+			//transform.localScale = new Vector3 (0.025f, 0.025f, 0.025f); 
 
 			//changement scale 
-			transform.localScale += Vector3.Lerp(new Vector3(0.15f,0.15f,0.15f), new Vector3(1,1,1), movement.Evaluate(percent)); 
+			//transform.localScale += Vector3.Lerp(new Vector3(0.15f,0.15f,0.15f), new Vector3(1,1,1), movement.Evaluate(percent)); 
 
 			yield return null; //coroutine en pause jusqu'à la prochaine frame  
 		}
@@ -56,5 +59,7 @@ public class Particle : MonoBehaviour {
     public void StopMovement()
     {
         StopCoroutine(moveUpCoroutine);
+        rotationZ = 0;
+        rotationY = 0;
     }
 }
