@@ -7,7 +7,9 @@ public class GeneratorManager : MonoBehaviour {
 	// Use this for initialization
 	public static int numberGenerator=10;
 	public GameObject particleGenerator;
-	public float champExclusion=20;
+	public float champExclusion=20*0.5f;
+	public float courbe=1;
+	public float rapprochementZCourbe=1;
 
 	public GameObject[] particles;
 	public int particleCount;
@@ -41,7 +43,7 @@ public class GeneratorManager : MonoBehaviour {
 	Vector3 PointOnCircle ( Vector3 center ,   float radius , float ang){
 		Vector3 pos;
 		pos.x = center.x + radius * Mathf.Sin(ang * Mathf.Deg2Rad);
-		pos.z = center.z + radius * Mathf.Cos(ang * Mathf.Deg2Rad);
+		pos.z = center.z + radius * Mathf.Cos(ang * Mathf.Deg2Rad*courbe)*rapprochementZCourbe;
 		pos.y = center.y;
 		return pos;
 	}
@@ -54,7 +56,6 @@ public class GeneratorManager : MonoBehaviour {
 			for (int i = 0; i < particleCount; i++)
 			{
 				GameObject particle = particles[Random.Range (0, particles.Length)];
-				print (particle);
 				ParticleGenerator.listGenerator [Random.Range(0,ParticleGenerator.listGenerator.Count)].GetComponent<ParticleGenerator> ().CreateParticle (particle);
 				yield return new WaitForSeconds (spawnWait);
 			}

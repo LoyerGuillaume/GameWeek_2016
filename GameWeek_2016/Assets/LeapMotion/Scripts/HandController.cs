@@ -175,21 +175,24 @@ public class HandController : MonoBehaviour
             hand_model.SetLeapHand(null);
     }
 
+    private string lastHandActive = LevelManager.RIGHT_HAND;
 
     public string GetTypeHandActive()
     {
-        Frame frame = GetFrame();
+        return lastHandActive;
 
-        if (frame.Hands[0].IsLeft)
-        {
-            return LevelManager.LEFT_HAND;
-        }
-        else if (frame.Hands[0].IsRight)
-        {
-            return LevelManager.RIGHT_HAND;
-        }
+        //Frame frame = GetFrame();
 
-        return "null";
+        //if (frame.Hands[0].IsLeft)
+        //{
+        //    return LevelManager.LEFT_HAND;
+        //}
+        //else if (frame.Hands[0].IsRight)
+        //{
+        //    return LevelManager.RIGHT_HAND;
+        //}
+
+        //return "null";
     }
 
     /** 
@@ -207,7 +210,10 @@ public class HandController : MonoBehaviour
                                     HandList leap_hands,
                                     HandModel left_model, HandModel right_model)
     {
+        int countHandActive = 0;
+
         List<int> ids_to_check = new List<int>(all_hands.Keys);
+
 
         // Go through all the active hands and update them.
         int num_hands = leap_hands.Count;
@@ -229,6 +235,12 @@ public class HandController : MonoBehaviour
             if (model != null)
             {
                 ids_to_check.Remove(leap_hand.Id);
+                if ((leap_hand.IsLeft && !LevelManager.manager.leftHandAlive) || (leap_hand.IsRight && !LevelManager.manager.rightHandAlive))
+                {
+                    continue;
+                }
+
+                countHandActive++;
 
                 // Create the hand and initialized it if it doesn't exist yet.
                 if (!all_hands.ContainsKey(leap_hand.Id))
@@ -240,15 +252,17 @@ public class HandController : MonoBehaviour
                     {
                         if (leap_hands[idHand].IsLeft)
                         {
+                            lastHandActive = LevelManager.LEFT_HAND;
                             countLeftHandInStage++;
                         }
                         else if (leap_hands[idHand].IsRight)
                         {
+                            lastHandActive = LevelManager.RIGHT_HAND;
                             countRightHandInStage++;
                         }
                     }
 
-                    if (leap_hands.Count > 1)
+                    if (countHandActive > 1)
                     {
                         break;
                     }
