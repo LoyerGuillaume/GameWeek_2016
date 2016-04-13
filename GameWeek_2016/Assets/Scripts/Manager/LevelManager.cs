@@ -11,7 +11,7 @@ public class LevelManager : BaseManager<LevelManager>
 
     public GameObject currentLevel;
 
-    private int countBrokenAltar = 1;
+    private int countBrokenAltar = 0;
 
     public int damagePerSeconds = 2;
 

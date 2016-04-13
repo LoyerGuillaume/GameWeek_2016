@@ -5,7 +5,7 @@ using System.Collections;
 public class Altar : MonoBehaviour {
 
     public int lifeScore = 100;
-    public int lifeDecrementation = 5;
+    public int lifeDecrementation = 10;
     public int lifeIncrementation = 20;
 
     private float lifeTimer = 0;
@@ -13,8 +13,15 @@ public class Altar : MonoBehaviour {
     private float tableHalfWidth;
     private Transform table;
 
+    private bool isAlive;
+    public bool isActive;
+
+    public GameObject[] eyes;
+
 	// Use this for initialization
 	void Start () {
+        isActive = true;
+        isAlive = true;
         lifeTimer = 0;
         table = transform.FindChild("Table");
         tableHalfWidth = table.localScale.x / 2;
@@ -22,23 +29,38 @@ public class Altar : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        lifeTimer += Time.deltaTime;
-        if (lifeTimer >= 1)
-        {
-            lifeTimer = 0;
-            lifeScore -= lifeDecrementation;
-            print(lifeScore);
-        }
 
-        if (lifeScore <= 0)
+        if (isAlive && isActive)
         {
-            GameObject.Destroy(gameObject);
+            lifeTimer += Time.deltaTime;
+            if (lifeTimer >= 1)
+            {
+                lifeTimer = 0;
+                lifeScore -= lifeDecrementation;
+            }
+
+            if (lifeScore <= 0)
+            {
+                Broke();
+                LevelManager.manager.AltarBroken();
+            }
+        } else
+        {
+
         }
+        
     }
 
     void OnTriggerEnter (Collider col)
     {
         lifeScore += lifeIncrementation;
+
+        if (!isAlive)
+        {
+            Restore();
+            LevelManager.manager.AltarRegen();
+        }
+
         StartCoroutine(MagnetObject(col.gameObject));
     }
 
@@ -68,6 +90,24 @@ public class Altar : MonoBehaviour {
         obj.transform.position = targetPosition;
         obj.transform.rotation = targetRotation;
         obj.GetComponent<Rigidbody>().velocity = Vector3.zero;
+    }
+
+    void Restore ()
+    {
+        isAlive = true;
+        foreach (GameObject eye in eyes)
+        {
+            eye.SetActive(false);
+        }
+    }
+
+    void Broke ()
+    {
+        isAlive = false;
+        foreach (GameObject eye in eyes)
+        {
+            eye.SetActive(true);
+        }
     }
 
 }
