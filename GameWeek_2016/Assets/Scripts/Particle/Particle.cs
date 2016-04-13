@@ -48,7 +48,7 @@ public class Particle : MonoBehaviour {
 			//changement scale 
 			transform.localScale += Vector3.Lerp(new Vector3(0.15f,0.15f,0.15f), new Vector3(1,1,1), movement.Evaluate(percent)); 
 
-			yield return null; //corotine en pause jusqu'à la prochaine frame  
+			yield return null; //coroutine en pause jusqu'à la prochaine frame  
 		}
 	}
 

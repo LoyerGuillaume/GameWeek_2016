@@ -56,7 +56,6 @@ public class GeneratorManager : MonoBehaviour {
 			for (int i = 0; i < particleCount; i++)
 			{
 				GameObject particle = particles[Random.Range (0, particles.Length)];
-				print (particle);
 				ParticleGenerator.listGenerator [Random.Range(0,ParticleGenerator.listGenerator.Count)].GetComponent<ParticleGenerator> ().CreateParticle (particle);
 				yield return new WaitForSeconds (spawnWait);
 			}
