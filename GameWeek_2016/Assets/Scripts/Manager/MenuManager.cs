@@ -24,10 +24,28 @@ public class MenuManager : BaseManager<MenuManager> {
         btnPlay.GetComponent<Button>().onClick.AddListener(PlayClick);
     }
 
+    public void StartGameOverMenu()
+    {
+        currentMenu = Instantiate(Resources.Load(PATH_UI + "GameOverMenu")) as GameObject;
+        currentMenu.SetActive(true);
+
+        currentMenu.transform.FindChild("ScoreText").GetComponent<Text>().text = "Score : " + LevelManager.manager.score;
+        
+        GameObject btnRetry = GameObject.Find("RestartButton");
+        btnRetry.GetComponent<Button>().onClick.AddListener(RestartClick);
+
+    }
+
     public void PlayClick()
     {
         DestroyCurrentMenu();
         GameManager.manager.StartLevel();
+    }
+
+    public void RestartClick()
+    {
+        DestroyCurrentMenu();
+        GameManager.manager.RestartLevel();
     }
 
     public void DestroyCurrentMenu()
