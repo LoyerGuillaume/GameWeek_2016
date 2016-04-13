@@ -38,6 +38,13 @@ public class MenuManager : BaseManager<MenuManager> {
 
     }
 
+    public void StartInfoHand()
+    {
+        currentMenu = Instantiate(Resources.Load(PATH_UI + "InfoHandMenu")) as GameObject;
+        currentMenu.SetActive(true);
+
+    }
+
     public void PlayClick()
     {
         DestroyCurrentMenu();
@@ -52,9 +59,12 @@ public class MenuManager : BaseManager<MenuManager> {
 
     public void DestroyCurrentMenu()
     {
-        currentMenu.SetActive(false);
-        Destroy(currentMenu);
-        currentMenu = null;
+        if (currentMenu != null)
+        {
+            currentMenu.SetActive(false);
+            Destroy(currentMenu);
+            currentMenu = null;
+        }
     }
 
 

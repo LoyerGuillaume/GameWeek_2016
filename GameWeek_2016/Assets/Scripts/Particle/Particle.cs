@@ -16,6 +16,7 @@ public class Particle : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
+        gameObject.transform.parent = GameObject.Find("ParticleContainer").transform;
         moveUpCoroutine = StartCoroutine(MoveUp ()); 
 	}
 	

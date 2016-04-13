@@ -27,7 +27,7 @@ public class Altar : MonoBehaviour {
         {
             lifeTimer = 0;
             lifeScore -= lifeDecrementation;
-            print(lifeScore);
+            //print(lifeScore);
         }
 
         if (lifeScore <= 0)

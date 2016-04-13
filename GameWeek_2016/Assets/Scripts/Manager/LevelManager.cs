@@ -25,7 +25,7 @@ public class LevelManager : BaseManager<LevelManager>
 
     float elapsedTime = 0;
 
-    private bool levelStart = false;
+    public bool levelStart = false;
 
     protected override IEnumerator CoroutineStart()
     {
@@ -59,6 +59,7 @@ public class LevelManager : BaseManager<LevelManager>
             if (lifeHandLeft <= 0)
             {
                 leftHandAlive = false;
+                GameManager.manager.HandDead();
             }
         }
         else if (LevelManager.RIGHT_HAND == handType && lifeHandRight > 0)
@@ -68,6 +69,7 @@ public class LevelManager : BaseManager<LevelManager>
             if (lifeHandRight <= 0)
             {
                 rightHandAlive = false;
+                GameManager.manager.HandDead();
             }
         }
     }
@@ -102,18 +104,29 @@ public class LevelManager : BaseManager<LevelManager>
             UpdatePerSeconde();
             elapsedTime = elapsedTime % 1;
         }
+        
 
-        if (!leftHandAlive && !rightHandAlive)
-        {
-            print("LevelManager - GameOver");
-            levelStart = false;
-            GameManager.manager.StartGameOver();
-        }
+        //if (!leftHandAlive && !rightHandAlive)
+        //{
+        //    print("LevelManager - GameOver");
+        //    levelStart = false;
+        //    GameManager.manager.StartGameOver();
+        //}
 
         print("Left Hand Life : " + lifeHandLeft);
         print("Left Hand Alive : " + leftHandAlive);
         print("Right Hand Life : " + lifeHandRight);
         print("Right Hand Alive : " + rightHandAlive);
+    }
+
+
+
+    public void ChangeHand ()
+    {
+        if ((!leftHandAlive && rightHandAlive) || (leftHandAlive && !rightHandAlive))
+        {
+            GameManager.manager.RemoveInfoHand();
+        }
     }
 
     void UpdatePerSeconde()
@@ -124,6 +137,8 @@ public class LevelManager : BaseManager<LevelManager>
 
     public void DestroyCurrentLevel()
     {
+        GameObject.Find("HandController").GetComponent<HandController>().DestroyAllHands();
+        GameObject.Find("GeneratorManager").GetComponent<GeneratorManager>().StopCoroutineWave();
         GameObject.Destroy(currentLevel);
     }
 

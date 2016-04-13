@@ -8,9 +8,10 @@ public class ParticleGenerator : MonoBehaviour {
 
 
 	public static List<GameObject> listGenerator = new List<GameObject>();
-	public static ParticleGenerator[] arrayOfGenerator = new ParticleGenerator[GeneratorManager.numberGenerator+1];
+	public static List<float> ponderation = new List<float>();
 
 	void Start () {
+        gameObject.transform.parent = GameObject.Find("ParticleContainer").transform;
 	}
 	
 	// Update is called once per frame

@@ -195,6 +195,16 @@ public class HandController : MonoBehaviour
         //return "null";
     }
 
+    void ChangeCurrentHand(string activeHand)
+    {
+        if (lastHandActive != activeHand)
+        {
+            LevelManager.manager.ChangeHand();
+        }
+
+        lastHandActive = activeHand;
+    }
+
     /** 
     * Updates hands based on tracking data in the specified Leap HandList object.
     * Active HandModel instances are updated if the hand they represent is still
@@ -252,12 +262,12 @@ public class HandController : MonoBehaviour
                     {
                         if (leap_hands[idHand].IsLeft)
                         {
-                            lastHandActive = LevelManager.LEFT_HAND;
+                            ChangeCurrentHand(LevelManager.LEFT_HAND);
                             countLeftHandInStage++;
                         }
                         else if (leap_hands[idHand].IsRight)
                         {
-                            lastHandActive = LevelManager.RIGHT_HAND;
+                            ChangeCurrentHand(LevelManager.RIGHT_HAND);
                             countRightHandInStage++;
                         }
                     }
@@ -302,7 +312,7 @@ public class HandController : MonoBehaviour
             all_hands.Remove(ids_to_check[i]);
         }
     }
-
+    
     /** Creates a ToolModel instance. */
     protected ToolModel CreateTool(ToolModel model)
     {
