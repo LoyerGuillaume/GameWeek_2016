@@ -15,13 +15,13 @@ public class LevelManager : BaseManager<LevelManager>
 
     public int damagePerSeconds = 2;
 
-    private int lifeHandRight = 100;
-    private int lifeHandLeft = 100;
+    private int lifeHandRight;
+    private int lifeHandLeft;
 
     public int score = 0;
 
-    public bool leftHandAlive = true;
-    public bool rightHandAlive = true;
+    public bool leftHandAlive;
+    public bool rightHandAlive;
 
     float elapsedTime = 0;
 
@@ -46,6 +46,8 @@ public class LevelManager : BaseManager<LevelManager>
         score = 0;
         lifeHandLeft = 100;
         lifeHandRight = 100;
+        leftHandAlive = true;
+        rightHandAlive = true;
     }
 
     public void DamageHand(string handType)
