@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class generator : MonoBehaviour 
+public class Generator : MonoBehaviour 
 {
 	public GameObject particles; 
 

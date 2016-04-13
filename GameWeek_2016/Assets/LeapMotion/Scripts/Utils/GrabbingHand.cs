@@ -134,11 +134,21 @@ public class GrabbingHand : MonoBehaviour
         active_object_ = hover;
     }
 
+    /// <summary>
+    /// Custom stop la coroutine de movement de l'active object
+    /// </summary>
+    void StopMovementActiveObject()
+    {
+        active_object_.GetComponent<Particle>().StopMovement();
+    }
+
     protected void StartPinch()
     {
         // Only pinch if we're hovering over an object.
         if (active_object_ == null)
             return;
+
+        StopMovementActiveObject();
 
         HandModel hand_model = GetComponent<HandModel>();
         Leap.Utils.IgnoreCollisions(gameObject, active_object_.gameObject, true);

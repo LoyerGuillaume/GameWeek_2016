@@ -9,12 +9,14 @@ public class Particle : MonoBehaviour {
 	private float percent; 
 	private Vector3 initialPosition; 
 	private Vector3 currentPosition; 
-	public float elevation = 5; 
+	public float elevation = 5;
+
+    Coroutine moveUpCoroutine; 
 
 	// Use this for initialization
 	void Start () 
-	{ 
-		StartCoroutine (MoveUp ()); 
+	{
+        moveUpCoroutine = StartCoroutine(MoveUp ()); 
 	}
 	
 	// Update is called once per frame
@@ -49,4 +51,9 @@ public class Particle : MonoBehaviour {
 			yield return null; //corotine en pause jusqu'à la prochaine frame  
 		}
 	}
+
+    public void StopMovement()
+    {
+        StopCoroutine(moveUpCoroutine);
+    }
 }
