@@ -29,6 +29,17 @@ public class GameManager : MonoBehaviour {
         LevelManager.manager.StartLevel();
     }
 
+    public void RestartLevel()
+    {
+        LevelManager.manager.DestroyCurrentLevel();
+        MenuManager.manager.StartMenu();
+    }
+
+    public void StartGameOver()
+    {
+        MenuManager.manager.StartGameOverMenu();
+    }
+
     // Update is called once per frame
     void Update () {
 	
