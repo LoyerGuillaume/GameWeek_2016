@@ -23,7 +23,6 @@ public class LevelManager : BaseManager<LevelManager>
     public bool leftHandAlive;
     public bool rightHandAlive;
 
-
     public Material handMat = null;
 
     float elapsedTime = 0;
@@ -32,6 +31,9 @@ public class LevelManager : BaseManager<LevelManager>
 
     protected override IEnumerator CoroutineStart()
     {
+        Color handColor = handMat.color;
+        handMat.color = new Color(handColor.r, handColor.g, handColor.b, 1);
+
         IsReady = true;
         yield return null;
     }
@@ -55,9 +57,6 @@ public class LevelManager : BaseManager<LevelManager>
 
     public void DamageHand(string handType)
     {
-
-        Color handColor = handMat.color;
-        handMat.color = new Color(handColor.r, handColor.g, handColor.b, 0.1f);
 
         if (LevelManager.LEFT_HAND == handType && lifeHandLeft > 0)
         {
@@ -111,7 +110,12 @@ public class LevelManager : BaseManager<LevelManager>
             UpdatePerSeconde();
             elapsedTime = elapsedTime % 1;
         }
-        
+
+        Color handColor = handMat.color;
+        float handLife = (GameObject.Find("HandController").GetComponent<HandController>().GetTypeHandActive() == "LEFT_HAND") ? lifeHandLeft : lifeHandRight;
+        float alpha = handLife / 100f;
+        handMat.color = new Color(handColor.r, handColor.g, handColor.b, alpha);
+
 
         //if (!leftHandAlive && !rightHandAlive)
         //{
