@@ -34,6 +34,10 @@ public class GeneratorManager : MonoBehaviour {
 	void Start () {
 		setGenerator ();
 		AddParticleToGame ();
+        AddParticleToGame();
+        AddParticleToGame();
+        AddParticleToGame();
+        AddParticleToGame();
         SpawnWavesCoroutine = StartCoroutine(SpawnWaves ());
 	}
 	
@@ -128,8 +132,8 @@ public class GeneratorManager : MonoBehaviour {
 
 
 	void AddParticleToGame()
-	{ 
-		 GameObject addedParticle = particles[addingIndex];
+	{
+		GameObject addedParticle = particles[addingIndex];
 
 		//si c'est la première particule du jeu, elle démarre avec 100%
 		if (getableParticle.Count == 0)

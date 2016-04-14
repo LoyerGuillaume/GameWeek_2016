@@ -26,7 +26,7 @@ public class Altar : MonoBehaviour {
 
     public GameObject[] eyes;
 
-    public string typeFlower;
+    public FlowerType typeFlower;
 
 	// Use this for initialization
 	void Start () {
@@ -66,6 +66,7 @@ public class Altar : MonoBehaviour {
 
     void OnTriggerEnter (Collider col)
     {
+        if (col.gameObject.GetComponent<Particle>().flowerType != typeFlower) return;
         lifePoints += lifePoints + lifeIncrementation;
 
         if (state == AltarState.broken)
@@ -139,6 +140,8 @@ public class Altar : MonoBehaviour {
         obj.transform.rotation = targetRotation;
         obj.transform.localScale = targetScale;
         obj.GetComponent<Rigidbody>().velocity = Vector3.zero;
+
+        obj.GetComponent<Particle>().StartRotten();
     }
 
 }

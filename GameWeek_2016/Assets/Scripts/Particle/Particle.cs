@@ -1,6 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
+public enum FlowerType
+{
+    first,
+    second,
+    third,
+    fourth,
+    fifth
+}
+
 public class Particle : MonoBehaviour {
 
 	public AnimationCurve movement; 
@@ -13,6 +23,10 @@ public class Particle : MonoBehaviour {
 
     private float rotationY = 1.5f;
     private float rotationZ = 0.1f;
+
+    public FlowerType flowerType;
+
+    public float rottenTime = 6000;
 
     Coroutine moveUpCoroutine; 
 
@@ -61,5 +75,24 @@ public class Particle : MonoBehaviour {
         StopCoroutine(moveUpCoroutine);
         rotationZ = 0;
         rotationY = 0;
+    }
+
+    public void StartRotten ()
+    {
+        StartCoroutine(Rotten());
+    }
+
+    IEnumerator Rotten ()
+    {
+        timer = 0;
+
+        while (timer < rottenTime)
+        {
+            timer += Time.deltaTime * 1000;
+            //ajouter le shader de pourrissement
+            yield return null;
+        }
+
+        GameObject.Destroy(gameObject);
     }
 }

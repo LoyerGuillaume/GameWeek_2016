@@ -4,8 +4,7 @@ using System.Collections.Generic;
 
 public class ParticleGenerator : MonoBehaviour {
 
-	// Use this for initialization
-
+    // Use this for initialization
 
 	public static List<GameObject> listGenerator = new List<GameObject>();
 	public static List<float> ponderation = new List<float>();
