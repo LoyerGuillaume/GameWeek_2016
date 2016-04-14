@@ -7,7 +7,7 @@ public class MenuManager : BaseManager<MenuManager> {
 
     private const string PATH_UI = "UI/";
 
-    private GameObject currentMenu;
+    public GameObject currentMenu;
 
     protected override IEnumerator CoroutineStart()
     {
@@ -17,12 +17,19 @@ public class MenuManager : BaseManager<MenuManager> {
 
     public void StartMenu ()
     {
+        StartHudMenu();
+        //StartDemoMenu();
+    }
+
+    void StartHudMenu()
+    {
         currentMenu = Instantiate(Resources.Load(PATH_UI + "MainMenu")) as GameObject;
         currentMenu.SetActive(true);
 
-        GameObject btnPlay = GameObject.Find("Play");
-        btnPlay.GetComponent<Button>().onClick.AddListener(PlayClick);
+        //GameObject btnPlay = GameObject.Find("Play");
+        //btnPlay.GetComponent<Button>().onClick.AddListener(PlayClick);
     }
+
 
     public void StartGameOverMenu()
     {

@@ -49,10 +49,15 @@ public class LevelManager : BaseManager<LevelManager>
     private void InitLevelParam()
     {
         score = 0;
-        lifeHandLeft = 100;
-        lifeHandRight = 100;
+        RestartLiveHand();
         leftHandAlive = true;
         rightHandAlive = true;
+    }
+
+    public void RestartLiveHand()
+    {
+        lifeHandLeft = 100;
+        lifeHandRight = 100;
     }
 
     public void DamageHand(string handType)
@@ -94,6 +99,13 @@ public class LevelManager : BaseManager<LevelManager>
     {
         HandController handController = currentLevel.transform.FindChild("HandController").GetComponent<HandController>();
         DamageHand(handController.GetTypeHandActive());
+    }
+
+    public void RestartAlphaHand()
+    {
+        Color handColor = handMat.color;
+        float alpha = 1;
+        handMat.color = new Color(handColor.r, handColor.g, handColor.b, alpha);
     }
     
     void Update ()

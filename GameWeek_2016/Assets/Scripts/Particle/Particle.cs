@@ -35,7 +35,7 @@ public class Particle : MonoBehaviour {
 	{
         gameObject.transform.parent = GameObject.Find("ParticleContainer").transform;
         moveUpCoroutine = StartCoroutine(MoveUp ()); 
-		print (endTime);
+		//print (endTime);
 	}
 	
 	// Update is called once per frame
@@ -72,7 +72,7 @@ public class Particle : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider col){
-		if (col.gameObject.name == "BoxTop") {
+		if (col.gameObject.name == "BoxTop" || col.gameObject.name == "BoxFace") {
 			Destroy (gameObject);
 		}
 	}
