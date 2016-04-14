@@ -7,7 +7,14 @@ public class GameManager : MonoBehaviour {
 
     bool infoMenuActive = false;
 
+    bool mainMenuActive = false;
+
     public bool gameOver = false;
+
+
+    public float speedCamera = 2;
+
+    private Quaternion startRotationCamera;
 
     private GameManager() { }
 
@@ -22,22 +29,52 @@ public class GameManager : MonoBehaviour {
         while (!(MenuManager.manager.IsReady) || !(LevelManager.manager.IsReady)) {
             yield return null;
         }
-        
-        MenuManager.manager.StartMenu();
 
+        startRotationCamera = Camera.main.transform.rotation;
+
+        MenuManager.manager.StartMenu();
+        StartRotationMenu();
+        mainMenuActive = true;
     }
 
     public void StartLevel()
     {
         gameOver = false;
         print("GameManager - StartLevel");
+        mainMenuActive = false;
+        StartCoroutine(ReinitializeCamera());
+        ReinitializeCamera();
         LevelManager.manager.StartLevel();
+    }
+
+    void StartRotationMenu()
+    {
+        Camera.main.transform.rotation = Quaternion.Euler(Vector3.zero);
+    }
+
+    public float duration = 3f;
+
+    IEnumerator ReinitializeCamera()
+    {
+        float elapsedTime = 0;
+
+        while (elapsedTime < duration)
+        {
+            Camera.main.transform.rotation = Quaternion.Slerp(Camera.main.transform.rotation, startRotationCamera, Time.deltaTime);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        Camera.main.transform.rotation = startRotationCamera;
+
     }
 
     public void RestartLevel()
     {
+        StartRotationMenu();
         LevelManager.manager.DestroyCurrentLevel();
         MenuManager.manager.StartMenu();
+        mainMenuActive = true;
     }
 
     public void StartGameOver()
@@ -77,8 +114,15 @@ public class GameManager : MonoBehaviour {
         MenuManager.manager.DestroyCurrentMenu();
     }
 
+
     // Update is called once per frame
     void Update () {
-	
-	}
+        
+        if (mainMenuActive)
+        {
+            Camera.main.transform.Rotate(new Vector3(0, Time.deltaTime * speedCamera, 0));
+        }
+    }
+
+
 }
