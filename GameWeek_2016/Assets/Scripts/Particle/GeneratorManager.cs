@@ -19,6 +19,8 @@ public class GeneratorManager : MonoBehaviour {
 	//tableau des particles tirables en jeu avec leur valeur de tirage associée (%)
 	private List<GameObject> getableParticle = new List<GameObject>();
 	private List<float> purcentParticle = new List<float>();
+	public List<GameObject> listGenerator = new List<GameObject>();
+	public List<float> ponderation = new List<float>();
 
 	public int sTimeAddingParticle = 2;
 	private int countTimer = 0;
@@ -34,11 +36,8 @@ public class GeneratorManager : MonoBehaviour {
 	void Start () {
 		setGenerator ();
 		AddParticleToGame ();
-        AddParticleToGame();
-        AddParticleToGame();
-        AddParticleToGame();
-        AddParticleToGame();
         SpawnWavesCoroutine = StartCoroutine(SpawnWaves ());
+
 	}
 	
 	// Update is called once per frame
@@ -63,8 +62,8 @@ public class GeneratorManager : MonoBehaviour {
 			Vector3 pos = PointOnCircle(center, size.x/2,angle);
 			Quaternion rot = Quaternion.FromToRotation(Vector3.forward, center-pos);
 			GameObject childObject = Instantiate (particleGenerator, pos, rot) as GameObject;
-			ParticleGenerator.listGenerator.Add (childObject);
-			ParticleGenerator.ponderation.Add (percentDrop);
+			listGenerator.Add (childObject);
+			ponderation.Add (percentDrop);
 		}
 
 	}
@@ -85,9 +84,9 @@ public class GeneratorManager : MonoBehaviour {
 			for (int i = 0; i < particleCount; i++)
 			{
 				GameObject particle = GetParticle ();
-				GameObject generator = aleatoire_pondere (ParticleGenerator.listGenerator, ParticleGenerator.ponderation);
+				GameObject generator = aleatoire_pondere (listGenerator, ponderation);
 				generator.GetComponent<ParticleGenerator> ().CreateParticle (particle);
-				ManagePurcentRetired (lastIndexDropGenerator, percentDownGenerator, ParticleGenerator.ponderation);
+				ManagePurcentRetired (lastIndexDropGenerator, percentDownGenerator, ponderation);
 				yield return new WaitForSeconds (spawnWait);
 			}
 			yield return new WaitForSeconds (waveWait);
@@ -132,8 +131,8 @@ public class GeneratorManager : MonoBehaviour {
 
 
 	void AddParticleToGame()
-	{
-		GameObject addedParticle = particles[addingIndex];
+	{ 
+		 GameObject addedParticle = particles[addingIndex];
 
 		//si c'est la première particule du jeu, elle démarre avec 100%
 		if (getableParticle.Count == 0)
@@ -167,7 +166,7 @@ public class GeneratorManager : MonoBehaviour {
     public void StopCoroutineWave()
     {
         print("StopCoroutineWave");
-        StopCoroutine(SpawnWavesCoroutine);
+        
     }
 
 
@@ -191,5 +190,8 @@ public class GeneratorManager : MonoBehaviour {
 		return selected;
 	}
 
+	void stopWaves (){
+		
+	}
 
 }
