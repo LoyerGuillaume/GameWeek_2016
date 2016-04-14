@@ -1,21 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
-public enum FlowerType
-{
-    first,
-    second,
-    third,
-    fourth,
-    fifth
-}
-
 public class Particle : MonoBehaviour {
 
 	public AnimationCurve movement; 
 	private float timer = 0; 
-	private float endTime = 10000; 
+	private float endTime;
 	private float percent; 
 	private Vector3 initialPosition; 
 	private Vector3 currentPosition; 
@@ -24,10 +14,6 @@ public class Particle : MonoBehaviour {
     private float rotationY = 1.5f;
     private float rotationZ = 0.1f;
 
-    public FlowerType flowerType;
-
-    public float rottenTime = 6000;
-
     Coroutine moveUpCoroutine; 
 
 	// Use this for initialization
@@ -35,6 +21,7 @@ public class Particle : MonoBehaviour {
 	{
         gameObject.transform.parent = GameObject.Find("ParticleContainer").transform;
         moveUpCoroutine = StartCoroutine(MoveUp ()); 
+		print (endTime);
 	}
 	
 	// Update is called once per frame
@@ -70,6 +57,12 @@ public class Particle : MonoBehaviour {
 		}
 	}
 
+	void OnTriggerEnter(Collider col){
+		if (col.gameObject.name == "BoxTop") {
+			Destroy (gameObject);
+		}
+	}
+
     public void StopMovement()
     {
         StopCoroutine(moveUpCoroutine);
@@ -77,22 +70,7 @@ public class Particle : MonoBehaviour {
         rotationY = 0;
     }
 
-    public void StartRotten ()
-    {
-        StartCoroutine(Rotten());
-    }
-
-    IEnumerator Rotten ()
-    {
-        timer = 0;
-
-        while (timer < rottenTime)
-        {
-            timer += Time.deltaTime * 1000;
-            //ajouter le shader de pourrissement
-            yield return null;
-        }
-
-        GameObject.Destroy(gameObject);
-    }
+	public void InitSpeed(float pSpeed){
+		endTime = pSpeed;
+	}
 }
