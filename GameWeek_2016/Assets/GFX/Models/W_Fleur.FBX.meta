@@ -10,26 +10,41 @@ ModelImporter:
     100004: W_Petals02
     100006: W_Petals02b
     100008: W_Pistil
+    100010: W_Petals003
+    100012: W_Petals01
+    100014: W_Petals01_back
     400000: //RootNode
     400002: W_Petals01b
     400004: W_Petals02
     400006: W_Petals02b
     400008: W_Pistil
+    400010: W_Petals003
+    400012: W_Petals01
+    400014: W_Petals01_back
     2300000: //RootNode
     2300002: W_Petals01b
     2300004: W_Petals02
     2300006: W_Petals02b
     2300008: W_Pistil
+    2300010: W_Petals003
+    2300012: W_Petals01
+    2300014: W_Petals01_back
     3300000: //RootNode
     3300002: W_Petals01b
     3300004: W_Petals02
     3300006: W_Petals02b
     3300008: W_Pistil
+    3300010: W_Petals003
+    3300012: W_Petals01
+    3300014: W_Petals01_back
     4300000: W_Petals01
     4300002: W_Petals02
     4300004: W_Petals02b
     4300006: W_Petals01b
     4300008: W_Pistil
+    4300010: W_Fleur
+    4300012: W_Petals01_back
+    4300014: W_Petals003
     9500000: //RootNode
   materials:
     importMaterials: 1

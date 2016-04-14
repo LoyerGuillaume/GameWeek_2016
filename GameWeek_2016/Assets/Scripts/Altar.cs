@@ -16,21 +16,22 @@ public class Altar : MonoBehaviour {
     public int lifeDecrementation = 10;
     public int lifeIncrementation = 20;
 
-    private float lifeTimer = 0;
+    //private float lifeTimer = 0;
+    private float lastElapsedTime;
 
     private float tableHalfWidth;
     private Transform table;
 
     public AltarState state;
-    public bool isActive;
 
     public GameObject[] eyes;
 
+    public string typeFlower;
+
 	// Use this for initialization
 	void Start () {
-        isActive = true;
         state = AltarState.alive;
-        lifeTimer = 0;
+        lastElapsedTime = 0;
         table = transform.FindChild("Table");
         tableHalfWidth = table.localScale.x / 2;
     }
@@ -38,12 +39,11 @@ public class Altar : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (state != AltarState.broken && isActive)
+        if (state != AltarState.broken)
         {
-            lifeTimer += Time.deltaTime;
-            if (lifeTimer >= 1)
+            if (LevelManager.manager.score - lastElapsedTime >= 1)
             {
-                lifeTimer = 0;
+                lastElapsedTime = LevelManager.manager.score;
                 lifePoints -= lifeDecrementation;
             }
 
@@ -80,6 +80,7 @@ public class Altar : MonoBehaviour {
     void Restore ()
     {
         state = AltarState.alive;
+        lastElapsedTime = LevelManager.manager.score;
         foreach (GameObject eye in eyes)
         {
             eye.SetActive(false);

@@ -23,6 +23,9 @@ public class LevelManager : BaseManager<LevelManager>
     public bool leftHandAlive;
     public bool rightHandAlive;
 
+
+    public Material handMat = null;
+
     float elapsedTime = 0;
 
     public bool levelStart = false;
@@ -52,6 +55,10 @@ public class LevelManager : BaseManager<LevelManager>
 
     public void DamageHand(string handType)
     {
+
+        Color handColor = handMat.color;
+        handMat.color = new Color(handColor.r, handColor.g, handColor.b, 0.1f);
+
         if (LevelManager.LEFT_HAND == handType && lifeHandLeft > 0)
         {
             lifeHandLeft -= damagePerSeconds;
@@ -99,7 +106,7 @@ public class LevelManager : BaseManager<LevelManager>
 
         elapsedTime += Time.deltaTime;
         
-        if (countBrokenAltar > 0 && elapsedTime >= 1)
+        if (elapsedTime >= 1)
         {
             UpdatePerSeconde();
             elapsedTime = elapsedTime % 1;
@@ -113,10 +120,10 @@ public class LevelManager : BaseManager<LevelManager>
         //    GameManager.manager.StartGameOver();
         //}
 
-        print("Left Hand Life : " + lifeHandLeft);
-        print("Left Hand Alive : " + leftHandAlive);
-        print("Right Hand Life : " + lifeHandRight);
-        print("Right Hand Alive : " + rightHandAlive);
+        //print("Left Hand Life : " + lifeHandLeft);
+        //print("Left Hand Alive : " + leftHandAlive);
+        //print("Right Hand Life : " + lifeHandRight);
+        //print("Right Hand Alive : " + rightHandAlive);
     }
 
 
@@ -132,7 +139,10 @@ public class LevelManager : BaseManager<LevelManager>
     void UpdatePerSeconde()
     {
         score++;
-        DamageCurrentHand();
+        if (countBrokenAltar > 0)
+        {
+            DamageCurrentHand();
+        }
     }
 
     public void DestroyCurrentLevel()

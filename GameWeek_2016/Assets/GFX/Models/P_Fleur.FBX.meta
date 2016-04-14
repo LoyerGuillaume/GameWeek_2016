@@ -13,6 +13,10 @@ ModelImporter:
     100010: P_Petals03b
     100012: P_Pistile
     100014: V_Centre001
+    100016: P_Petals01_back
+    100018: P_Petals02_back
+    100020: P_Petals03_back
+    100022: P_Petals_03
     400000: //RootNode
     400002: P_Petals01
     400004: P_Petals01b
@@ -21,6 +25,10 @@ ModelImporter:
     400010: P_Petals03b
     400012: P_Pistile
     400014: V_Centre001
+    400016: P_Petals01_back
+    400018: P_Petals02_back
+    400020: P_Petals03_back
+    400022: P_Petals_03
     2300000: //RootNode
     2300002: P_Petals01
     2300004: P_Petals01b
@@ -29,6 +37,10 @@ ModelImporter:
     2300010: P_Petals03b
     2300012: P_Pistile
     2300014: V_Centre001
+    2300016: P_Petals01_back
+    2300018: P_Petals02_back
+    2300020: P_Petals03_back
+    2300022: P_Petals_03
     3300000: //RootNode
     3300002: P_Petals01
     3300004: P_Petals01b
@@ -37,6 +49,10 @@ ModelImporter:
     3300010: P_Petals03b
     3300012: P_Pistile
     3300014: V_Centre001
+    3300016: P_Petals01_back
+    3300018: P_Petals02_back
+    3300020: P_Petals03_back
+    3300022: P_Petals_03
     4300000: P_Fleur_03
     4300002: P_Petals03b
     4300004: P_Petals02
@@ -45,6 +61,11 @@ ModelImporter:
     4300010: P_Petals01b
     4300012: V_Centre001
     4300014: P_Pistile
+    4300016: P_Fleur
+    4300018: P_Petals_03
+    4300020: P_Petals03_back
+    4300022: P_Petals02_back
+    4300024: P_Petals01_back
     9500000: //RootNode
   materials:
     importMaterials: 1
