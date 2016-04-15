@@ -1,29 +1,32 @@
 fileFormatVersion: 2
 guid: 591f5b9f2de8a0c4cb61dcf5d1a6e4b9
-timeCreated: 1460706938
+timeCreated: 1460708847
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: //RootNode
     100002: Cylinder009
-    100004: Group005
-    100006: Group008
-    100008: Omni002
+    100004: Cylinder010
+    100006: Group005
+    100008: Group008
     400000: //RootNode
     400002: Cylinder009
-    400004: Group005
-    400006: Group008
-    400008: Omni002
+    400004: Cylinder010
+    400006: Group005
+    400008: Group008
     2300000: Cylinder009
-    2300002: Group005
-    2300004: Group008
+    2300002: Cylinder010
+    2300004: Group005
+    2300006: Group008
     3300000: Cylinder009
-    3300002: Group005
-    3300004: Group008
-    4300000: Cylinder009
-    4300002: Group008
-    4300004: Group005
+    3300002: Cylinder010
+    3300004: Group005
+    3300006: Group008
+    4300000: Cylinder010
+    4300002: Group005
+    4300004: Cylinder009
+    4300006: Group008
     9500000: //RootNode
   materials:
     importMaterials: 1

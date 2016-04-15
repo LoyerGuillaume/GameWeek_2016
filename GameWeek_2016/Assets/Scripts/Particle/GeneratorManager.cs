@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class GeneratorManager : MonoBehaviour {
 
 	// Use this for initialization
-	public static int numberGenerator=10;
+	public int numberGenerator = 5;
 	public GameObject particleGenerator;
 	public float champExclusion=20*0.5f;
 	public float courbe=1;
@@ -87,7 +87,7 @@ public class GeneratorManager : MonoBehaviour {
 				GameObject generator = aleatoire_pondere (listGenerator, ponderation);
 				generator.GetComponent<ParticleGenerator> ().CreateParticle (particle);
 				ManagePurcentRetired (lastIndexDropGenerator, percentDownGenerator, ponderation);
-				yield return new WaitForSeconds (spawnWait);
+				yield return new WaitForSeconds (Random.Range(0.5f , spawnWait));
 			}
 			yield return new WaitForSeconds (waveWait);
 		}

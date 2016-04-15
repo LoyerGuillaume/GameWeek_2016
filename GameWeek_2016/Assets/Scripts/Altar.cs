@@ -27,6 +27,7 @@ public class Altar : MonoBehaviour {
     public GameObject[] eyes;
 
     public GameObject spotAngry;
+    public GameObject spotAngry2;
 
     public FlowerType typeFlower;
 
@@ -85,6 +86,8 @@ public class Altar : MonoBehaviour {
 
     void Restore ()
     {
+        spotAngry.GetComponent<Light>().intensity = 0;
+        spotAngry2.GetComponent<Light>().intensity = 0;
         state = AltarState.alive;
         lastElapsedTime = LevelManager.manager.score;
         foreach (GameObject eye in eyes)
@@ -120,15 +123,20 @@ public class Altar : MonoBehaviour {
 
         while (elapsedTime < duration)
         {
-            float intensity = Mathf.Cos(0.5f + elapsedTime / duration) * 8;
+            //float intensity = Mathf.Cos(0.5f + elapsedTime / duration) * 8;
+            float intensity = Mathf.Lerp(0, 8, duration / elapsedTime);
             spotAngry.GetComponent<Light>().intensity = intensity;
+            spotAngry2.GetComponent<Light>().intensity = intensity;
             print(intensity);
             
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        spotAngry.GetComponent<Light>().intensity = 0;
+        spotAngry.GetComponent<Light>().intensity = 8;
+        spotAngry2.GetComponent<Light>().intensity = 8;
+
+        //spotAngry.GetComponent<Light>().intensity = 0;
 
     }
 
@@ -143,7 +151,7 @@ public class Altar : MonoBehaviour {
 
         Vector3 initPosition = obj.transform.position;
         Vector3 targetPosition = table.position;
-        targetPosition.y += 0.5f;
+        targetPosition.y += 1f;
         targetPosition.x += Random.Range(-tableHalfWidth, tableHalfWidth);
 
         Quaternion initRotation = obj.transform.rotation;

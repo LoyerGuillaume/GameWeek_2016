@@ -155,14 +155,14 @@ public class GameManager : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         
-        if (mainMenuActive)
-        {
+        //if (mainMenuActive)
+        //{
             Vector3 rotateCamera = new Vector3(0, Time.deltaTime * speedCamera, 0);
 
             settingTemple.transform.Rotate(rotateCamera);
             //currentDemoMenu.transform.Rotate(rotateCamera);
             //Camera.main.transform.Rotate(rotateCamera);
-        }
+        //}
     }
 
 

@@ -6,7 +6,7 @@ public class ParticleGenerator : MonoBehaviour {
 
 	// Use this for initialization
 	public float startSpeed = 25000;
-	public float growSpeed = 0.00005f;
+	public float growSpeed = 0.00015f;
 
 
 
