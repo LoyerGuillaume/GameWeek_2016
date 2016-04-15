@@ -105,7 +105,7 @@ public class Altar : MonoBehaviour {
         lifePoints = 0;
         state = AltarState.broken;
 
-        StartCoroutine(SpotAngryCoroutine());
+        StartCoroutine(SpotBrokenCoroutine());
 
         foreach (GameObject eye in eyes)
         {
@@ -113,7 +113,7 @@ public class Altar : MonoBehaviour {
         }
     }
 
-    IEnumerator SpotAngryCoroutine()
+    IEnumerator SpotBrokenCoroutine()
     {
         float elapsedTime = 0;
         float duration = 0.25f;
