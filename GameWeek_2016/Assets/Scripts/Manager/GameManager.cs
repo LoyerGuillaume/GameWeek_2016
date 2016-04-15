@@ -5,12 +5,17 @@ public class GameManager : MonoBehaviour {
     
     public static GameManager manager;
 
+    private const string PATH_LEVEL = "Levels/";
+
     bool infoMenuActive = false;
 
-    bool mainMenuActive = false;
+    public bool mainMenuActive = false;
 
     public bool gameOver = false;
 
+    GameObject currentDemoMenu;
+
+    GameObject settingTemple;
 
     public float speedCamera = 2;
 
@@ -30,15 +35,27 @@ public class GameManager : MonoBehaviour {
             yield return null;
         }
 
+        PlayLoopMusic();
+
         startRotationCamera = Camera.main.transform.rotation;
 
+        settingTemple = GameObject.Find("SettingTemple");
+
         MenuManager.manager.StartMenu();
+        StartDemoMenu();
         StartRotationMenu();
         mainMenuActive = true;
     }
 
+    private void PlayLoopMusic()
+    {
+        if (MusicLoopsManager.manager) MusicLoopsManager.manager.PlayMusic(MusicType.loopMusic);
+    }
+
     public void StartLevel()
     {
+        MenuManager.manager.DestroyCurrentMenu();
+        DestroyMenuDemo();
         gameOver = false;
         print("GameManager - StartLevel");
         mainMenuActive = false;
@@ -47,9 +64,11 @@ public class GameManager : MonoBehaviour {
         LevelManager.manager.StartLevel();
     }
 
+
     void StartRotationMenu()
     {
-        Camera.main.transform.rotation = Quaternion.Euler(Vector3.zero);
+
+        //Camera.main.transform.rotation = Quaternion.Euler(Vector3.zero);
     }
 
     public float duration = 3f;
@@ -68,9 +87,18 @@ public class GameManager : MonoBehaviour {
         Camera.main.transform.rotation = startRotationCamera;
 
     }
+    
+    void StartDemoMenu()
+    {
+        currentDemoMenu = Instantiate(Resources.Load(PATH_LEVEL + "MenuDemo")) as GameObject;
+        currentDemoMenu.SetActive(true);
+    }
 
     public void RestartLevel()
     {
+        LevelManager.manager.RestartLiveHand();
+        LevelManager.manager.RestartAlphaHand();
+        StartDemoMenu();
         StartRotationMenu();
         LevelManager.manager.DestroyCurrentLevel();
         MenuManager.manager.StartMenu();
@@ -115,12 +143,25 @@ public class GameManager : MonoBehaviour {
     }
 
 
+    void DestroyMenuDemo()
+    {
+        GameObject.Find("HandController").GetComponent<HandController>().DestroyAllHands();
+        GameObject.Find("GeneratorManager").GetComponent<GeneratorManager>().StopCoroutineWave();
+        currentDemoMenu.SetActive(false);
+        GameObject.Destroy(currentDemoMenu);
+    }
+
+
     // Update is called once per frame
     void Update () {
         
         if (mainMenuActive)
         {
-            Camera.main.transform.Rotate(new Vector3(0, Time.deltaTime * speedCamera, 0));
+            Vector3 rotateCamera = new Vector3(0, Time.deltaTime * speedCamera, 0);
+
+            settingTemple.transform.Rotate(rotateCamera);
+            //currentDemoMenu.transform.Rotate(rotateCamera);
+            //Camera.main.transform.Rotate(rotateCamera);
         }
     }
 

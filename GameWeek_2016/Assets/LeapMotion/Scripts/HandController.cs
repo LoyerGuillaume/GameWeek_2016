@@ -245,10 +245,14 @@ public class HandController : MonoBehaviour
             if (model != null)
             {
                 ids_to_check.Remove(leap_hand.Id);
-                if ((leap_hand.IsLeft && !LevelManager.manager.leftHandAlive) || (leap_hand.IsRight && !LevelManager.manager.rightHandAlive))
+                if (!GameManager.manager.mainMenuActive)
                 {
-                    continue;
+                    if ((leap_hand.IsLeft && !LevelManager.manager.leftHandAlive) || (leap_hand.IsRight && !LevelManager.manager.rightHandAlive))
+                    {
+                        continue;
+                    }
                 }
+                    
 
                 countHandActive++;
 
@@ -272,7 +276,7 @@ public class HandController : MonoBehaviour
                         }
                     }
 
-                    if (countHandActive > 1)
+                    if (countHandActive > 1 && !GameManager.manager.mainMenuActive)
                     {
                         break;
                     }

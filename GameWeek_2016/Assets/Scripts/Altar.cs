@@ -26,6 +26,8 @@ public class Altar : MonoBehaviour {
 
     public GameObject[] eyes;
 
+    public GameObject spotAngry;
+
     public FlowerType typeFlower;
 
 	// Use this for initialization
@@ -67,6 +69,9 @@ public class Altar : MonoBehaviour {
     void OnTriggerEnter (Collider col)
     {
         if (col.gameObject.GetComponent<Particle>().flowerType != typeFlower) return;
+
+        if (SfxManager.manager) SfxManager.manager.PlaySfx("FlowerInAltar");
+
         lifePoints += lifePoints + lifeIncrementation;
 
         if (state == AltarState.broken)
@@ -95,12 +100,36 @@ public class Altar : MonoBehaviour {
 
     void Broke ()
     {
+        if (SfxManager.manager) SfxManager.manager.PlaySfx("AltarAngry");
+
         lifePoints = 0;
         state = AltarState.broken;
+
+        StartCoroutine(SpotAngryCoroutine());
+
         foreach (GameObject eye in eyes)
         {
             eye.SetActive(true);
         }
+    }
+
+    IEnumerator SpotAngryCoroutine()
+    {
+        float elapsedTime = 0;
+        float duration = 0.25f;
+
+        while (elapsedTime < duration)
+        {
+            float intensity = Mathf.Cos(0.5f + elapsedTime / duration) * 8;
+            spotAngry.GetComponent<Light>().intensity = intensity;
+            print(intensity);
+            
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        spotAngry.GetComponent<Light>().intensity = 0;
+
     }
 
 
