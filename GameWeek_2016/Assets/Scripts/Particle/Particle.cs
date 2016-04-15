@@ -49,6 +49,8 @@ public class Particle : MonoBehaviour {
 	{
 		initialPosition = transform.position;
 
+        transform.rotation = Quaternion.Euler(25, 0, 0);
+
 		timer = 0; 
 		Vector3 targetPosition = initialPosition; 
 		targetPosition.y += elevation;
